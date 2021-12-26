@@ -7,7 +7,7 @@ Discordのサーバー上に投稿されたメッセージを復唱してくれ�
 
 # 使用イメージ
 
-![image](https://user-images.githubusercontent.com/47214420/147410847-f635c5fa-44d5-49c7-b4f1-552b30ce9a8a.png)
+![image](https://user-images.githubusercontent.com/47214420/147410864-5c34620e-90eb-4cf3-b945-63c6f374f396.png)
 
  
 # 使用するライブラリ
