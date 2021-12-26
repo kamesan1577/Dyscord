@@ -1,11 +1,13 @@
 import discord
 import re
 
+from discord.errors import NotFound
+
 #使うときはDiscord Developer PortalでServer Member Intentをオンにしてください
 intents = discord.Intents.default()
 intents.members = True
 
-bot = discord.Bot(intents=intents)
+bot = discord.Client(intents=intents)
 
 @bot.event
 async def on_ready():
@@ -18,10 +20,13 @@ async def on_message(message):
         return
     #"/save {メッセージID}"と入れるとそのメッセージを保存してくれる
     if re.fullmatch(r"/save\s\d{18}",message.content):
-        saved_message = await message.channel.fetch_message(re.search(r"\d{18}",message.content).group())
-        print(saved_message)
-        await saved_message.reply(("保存主："+str(message.author)+"\n書き込み主："+str(saved_message.author)+"\n内容："+str(saved_message.content)+""))
-
+        try:
+            saved_message = await message.channel.fetch_message(re.search(r"\d{18}",message.content).group())
+            print(saved_message)
+            await saved_message.reply(("保存主："+str(message.author)+"\n書き込み主："+str(saved_message.author)+"\n内容："+str(saved_message.content)+""))
+        except NotFound:
+            await message.channel.send("メッセージが見つかりませんでした(保存したいメッセージと同じチャンネルで投稿してください)")
+        
     #"/delete {メッセージID}"と入れると保存されたメッセージを削除してくれる
     if re.fullmatch(r"/delete\s\d{18}",message.content):
         deleted_message = await message.channel.fetch_message(re.search(r"\d{18}",message.content).group())
